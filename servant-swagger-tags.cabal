@@ -1,5 +1,5 @@
 name:                servant-swagger-tags
-version:             0.1.0.0
+version:             0.1.0.1
 -- synopsis:
 -- description:
 homepage:            https://github.com/nakaji-dayo/servant-swagger-tags#readme
@@ -18,6 +18,7 @@ library
   exposed-modules:     Servant.Swagger.Tags
   build-depends:       base >= 4.7 && < 5
                      , servant
+                     , servant-client
                      , servant-server
                      , servant-swagger
                      , servant-mock
