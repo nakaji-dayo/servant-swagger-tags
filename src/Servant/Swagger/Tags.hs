@@ -10,12 +10,12 @@
 module Servant.Swagger.Tags where
 
 import           Control.Lens
-import qualified Data.Set        as S
+import           Data.HashSet.InsOrd
 import           Data.Swagger
-import qualified Data.Text       as Text
-import           Data.Typeable   (Typeable)
-import           GHC.TypeLits    (KnownSymbol, Symbol, symbolVal)
-import           Servant         hiding (Context)
+import           Data.Text
+import           Data.Typeable       (Typeable)
+import           GHC.TypeLits        (KnownSymbol, Symbol, symbolVal)
+import           Servant             hiding (Context)
 import           Servant.Mock
 import           Servant.Swagger
 
@@ -29,7 +29,7 @@ instance HasServer api ctx => HasServer (Tags tags :> api) ctx where
 
 instance (KnownSymbol tags, HasSwagger api) => HasSwagger (Tags tags :> api) where
   toSwagger _ = toSwagger (Proxy :: Proxy api)
-    & allOperations.tags %~ S.union (S.fromList [Text.pack (symbolVal (Proxy :: Proxy tags))])
+    & allOperations.tags %~ union (fromList [pack (symbolVal (Proxy :: Proxy tags))])
 
 instance HasMock api context => HasMock (Tags t :> api) context where
     mock _ = mock (Proxy :: Proxy api)
